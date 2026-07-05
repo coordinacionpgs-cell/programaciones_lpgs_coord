@@ -190,6 +190,7 @@ input:focus,select:focus{outline:2px solid var(--tema); outline-offset:1px; bord
   box-shadow:0 -4px 14px rgba(0,0,0,.06); z-index:50; flex-wrap:wrap;
 }
 .estado-guardado{font-size:12px; color:var(--gris); margin-right:auto;}
+a.btn{text-decoration:none; line-height:1.5;}
 
 /* ---------- Vista previa / impresión ---------- */
 #vista-previa{display:none;}
@@ -309,6 +310,7 @@ body.diseno-division .solo-division-th{display:table-cell;}
 <!-- ============ BARRA DE ACCIONES ============ -->
 <div class="barra-acciones">
   <span class="estado-guardado" id="estado-guardado"></span>
+  <a class="btn" href="programacion_global.html">← Ir a Global</a>
   <select id="sel-cargar" style="width:240px;" onchange="cargarSeleccionada()">
     <option value="">— Cargar programación guardada —</option>
   </select>

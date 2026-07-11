@@ -1103,19 +1103,29 @@ async function guardar(){
     id: idActual,
     periodo: state.periodo,
     tipo: "Global",
-    diseno: state.diseno,
-    payload: recolectarPayload()
+    diseno: state.diseno
   });
 
+  const payloadEnviado = recolectarPayload();
+
   try {
-    const resp = await fetch(`${API_URL}?${params.toString()}`);
-    const data = await resp.json();
-    estadoEl.textContent = data.ok ? `Guardado ✓ (${idActual})` : `Error: ${data.error}`;
+    await fetch(`${API_URL}?${params.toString()}`, {
+      method: "POST",
+      mode: "no-cors",
+      body: payloadEnviado
+    });
+
+    const verif = await fetch(`${API_URL}?action=obtener&id=${encodeURIComponent(idActual)}`);
+    const data = await verif.json();
+    const coincide = data.ok && data.payload === payloadEnviado;
+    estadoEl.textContent = coincide
+      ? `Guardado ✓ (${idActual})`
+      : "No se pudo confirmar el guardado. Revisa que el token sea correcto e inténtalo de nuevo.";
   } catch(err){
     estadoEl.textContent = "Error de conexión al guardar.";
   }
 }
-
+  
 async function refrescarListado(){
   const sel = document.getElementById("sel-cargar");
   sel.innerHTML = `<option value="">— Cargar programación guardada —</option>`;
